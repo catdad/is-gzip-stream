@@ -60,3 +60,7 @@ isGzipStream(unknownStream, function(err, isGzipped, knownStream) {
     // begin reading now
 });
 ```
+
+## License
+
+[ISC](http://spdx.org/licenses/ISC)
