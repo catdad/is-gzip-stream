@@ -22,3 +22,20 @@
 ## Install
 
     npm install --save is-gzip-stream
+    
+## Usage
+
+You can pass any readable stream into the module to determine if the stream contains gzipped content.
+
+**The module has to read some of the stream, meaning that you will not be able to use the entire stream if you wait to determine if the content is gzipped or not. To read the stream, you will need to use the stream provided by the lib. It is available both as a return value and in the callback, just in case.**
+
+```javascript
+var fs = require('fs');
+var isGzipStream = require('is-gzip-stream');
+
+var stream = fs.createReadStream('somefile');
+
+stream = isGzipStream(stream, function(err, isGzipped) {
+    // if there is no error, isGzipped will be a boolean
+});
+```
