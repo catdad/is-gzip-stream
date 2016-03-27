@@ -1,0 +1,7 @@
+# standard Node stuff
+node_modules/
+coverage/
+
+# extra IDE and test stuff
+test/
+.brackets.json
