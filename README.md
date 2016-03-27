@@ -37,5 +37,26 @@ var stream = fs.createReadStream('somefile');
 
 stream = isGzipStream(stream, function(err, isGzipped) {
     // if there is no error, isGzipped will be a boolean
+    
+    // stream can provide the entire content of the original file
+    // you can read the data as normal
+});
+```
+
+```javascript
+var fs = require('fs');
+var isGzipStream = require('is-gzip-stream');
+
+var unknownStream = fs.createReadStream('somefile');
+
+isGzipStream(unknownStream, function(err, isGzipped, knownStream) {
+    // if there is no error, isGzipped will be a boolean
+    
+    // knownStream can provide the entire content of the original file,
+    // and you can read it like normal
+    
+    // the original `stream` variable is still the same, though some data
+    // has been read already, and you will not get the entire file if you
+    // begin reading now
 });
 ```
