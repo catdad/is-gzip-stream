@@ -25,7 +25,8 @@ module.exports = function isGzippedStream(fromStream, callback) {
         // like through streams
         is(fromStream.on, Function) &&
         is(fromStream.once, Function) &&
-        is(fromStream.pipe, Function);
+        is(fromStream.pipe, Function) &&
+        fromStream.readable === true;
     
     if (!isStream) {
         asyncCall(callback, new TypeError('input is not a readable stream'));
