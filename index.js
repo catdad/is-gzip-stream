@@ -1,7 +1,5 @@
 /* jshint node: true */
 
-var stream = require('stream');
-
 var isGzip = require('is-gzip');
 var through = require('through2');
 
@@ -63,7 +61,7 @@ module.exports = function isGzippedStream(fromStream, callback) {
     fromStream.on('end', function() {
         if (Buffer.concat(dataBuffer).length < 3) {
             // the stream ended and never got enough data,
-            // so it clearly not gzipped
+            // so it's clearly not gzipped
             asyncCall(callback, undefined, false, toStream);
         }
     });
