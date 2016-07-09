@@ -173,6 +173,21 @@ describe('[positive]', function() {
         
         input.end();
     });
+    
+    it('errors on the input stream will be caught and triggered on the output stream', function(done) {
+        var ERR = new Error('input error');
+        var input = through();
+        
+        var output = isGzippedStream(input, function() {});
+        
+        output.on('error', function(err) {
+            expect(err).to.equal(ERR);
+            done();
+        });
+        
+        input.write('asdgsd');
+        input.emit('error', ERR);
+    });
 });
 
 describe('[negative]', function() {
