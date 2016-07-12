@@ -58,6 +58,12 @@ module.exports = function isGzippedStream(fromStream, callback) {
         callback(undefined, isGzippedStream, toStream);
     }
     
+    // re-emit errors from the input stream to the output stream
+    fromStream.on('error', function(err) {
+        var args = [].slice.call(arguments);
+        toStream.emit.apply(toStream, ['error'].concat(args));
+    });
+    
     fromStream.on('end', function() {
         if (Buffer.concat(dataBuffer).length < 3) {
             // the stream ended and never got enough data,
@@ -68,12 +74,6 @@ module.exports = function isGzippedStream(fromStream, callback) {
     
     // begin listening for data
     listenForData();
-    
-    // re-emit errors from the input stream to the output stream
-    fromStream.on('error', function(err) {
-        var args = [].slice.call(arguments);
-        toStream.emit.apply(toStream, ['error'].concat(args));
-    });
     
     fromStream.pipe(toStream);
     return toStream;
